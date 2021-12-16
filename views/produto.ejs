@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    
+    <title>Adicionar Produto</title>
+</head>
+<body>
+    <div class="container" style="margin-top: 20px;">
+        <div class="card" id="formulario-pergunta">
+            <div class="card-header">
+                <h3>Adicionar <%= produto.nome_produto %></h3>
+            </div>
+
+            <div class="row d-flex justify-content-center">
+                <div class="col-xl-6 col-md-6 col-lg-6 d-flex justify-content-center">
+                    <div class="single_delicious d-flex align-items-center" style="margin-top: 10px;">
+                        <div class="thumb" style="margin-right: 10px;">
+                            <img src="/img/burger/1.png" alt="">
+                        </div>
+                        <div class="info">
+                            <h3><%= produto.nome_produto %></h3>
+                            <p><%= produto.descricao %></p>
+                            <span>
+                                R$ <%= produto.valor %>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+
+            <div class="card-body">
+                <form method="POST" action="/atualizarcarrinho">
+                    <label>Quantidade</label>
+                    <input type="number" placeholder="Quantidade" class="form-control" name="quantidade">
+                    
+                    <br><label>Observação</label>
+                    <textarea placeholder="Digite a sua observação aqui" class="form-control" name="observacao"></textarea>
+
+                    <input type="number" class="form-control" name="id_produto" value="<%= produto.id %>" hidden>
+                    <input type="number" class="form-control" name="valor_produto" value="<%= produto.valor %>" hidden>
+                    <input type="text" class="form-control" name="nome_produto" value="<%= produto.nome_produto %>" hidden>
+                    <br>
+                    
+                    <button class="btn btn-primary">Adicionar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="/js/bootstrap.min.js"></script>
+
+</html>

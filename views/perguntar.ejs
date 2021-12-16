@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    
+    <title>Adicionar Produto</title>
+</head>
+<body>
+    <%- include partials/navbar.ejs %>
+    <div class="container">
+        <div class="card" id="formulario-pergunta">
+            <div class="card-header">
+                <h3>Realizar pergunta</h3>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="/atualizarpedido">
+                    <label>Título</label>
+                        <input type="text" placeholder="Título" class="form-control" name="titulo">
+                        <br><label>Descrição</label>
+                        <textarea placeholder="Descreva sua pergunta aqui" class="form-control" name="descricao"></textarea>
+                        <br>
+                        <button class="btn btn-primary">Perguntar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="/js/bootstrap.min.js"></script>
+
+</html>
