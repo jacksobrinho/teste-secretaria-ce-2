@@ -6,6 +6,8 @@ const connection = require("./database/database");
 //models
 const Produto = require("./database/models/Produto");
 const Carrinho = require("./database/models/Carrinho");
+const Vendas = require("./database/models/Vendas");
+const ProdutosVenda = require("./database/models/ProdutosVenda");
 
 //Database Connection
 connection.authenticate()
@@ -49,6 +51,73 @@ server.get("/carrinho", (req, res) => {
             total_compra: total_compra
         });
     });
+});
+
+server.post('/finalizarvenda', (req, res) => {
+    var status_requisicao = "";
+    var { nome_produto, descricao, valor, quantidade } = "";
+    var ultima_venda_id = "";
+    nome_produto = req.body.nome_produto;
+    descricao = req.body.descricao;
+    valor = req.body.valor;
+    quantidade = req.body.quantidade;
+
+    num_cartao = req.body.num_cartao;
+    nome_cartao = req.body.nome_cartao;
+    mes_vencimento = req.body.mes_vencimento;
+    ano_vencimento = req.body.ano_vencimento;
+    total_venda = req.body.total_venda;
+
+    console.log({
+        num_cartao: num_cartao,
+        nome_cartao: nome_cartao,
+        mes_vencimento: mes_vencimento,
+        ano_vencimento: ano_vencimento
+    });
+    
+    Vendas.create({
+        valor: req.body.total_venda,
+        numero_cartao: req.body.num_cartao,
+        nome_cartao: req.body.nome_cartao,
+        mes_vencimento: req.body.mes_vencimento,
+        ano_vencimento: req.body.ano_vencimento
+    })
+    .then(() => {
+        status_requisicao = "Venda realizada com sucesso!"
+        Carrinho.findAll( {raw: true} ).then(carrinho => {
+            Vendas.findAll({
+                raw: true,
+                limit: 1,
+                order: [['id', 'DESC' ]]
+            }).then(ultima_venda => {
+                ultima_venda.forEach(ultima_venda_item => {
+                    ultima_venda_id = ultima_venda_item.id;
+                })
+                carrinho.forEach(produto_carrinho => {
+                    ProdutosVenda.create({
+                        nome_produto: produto_carrinho.nome_produto,
+                        valor: produto_carrinho.valor_produto,
+                        quantidade: produto_carrinho.quantidade,
+                        id_venda: ultima_venda_id
+                    })
+                    .then(() => {
+                        console.log(status_requisicao);
+                        Carrinho.destroy({
+                            where: {},
+                            truncate: true
+                        });
+                    })
+                });
+            });
+            
+        });
+        res.send({atualizacao: status_requisicao});
+    })
+    .catch((msgError) => {
+        // console.log(msgError);
+        status_requisicao = msgError;
+        res.json({atualizacao: status_requisicao});
+    })
 });
 
 server.get("/atualizarcarrinho/confirmarexclusao/:id", (req, res) => {

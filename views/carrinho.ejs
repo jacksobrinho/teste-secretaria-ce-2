@@ -5,9 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style_carrinho.css">
     <title>Carrinho</title>
 </head>
 <body>
+    <!-- header-start -->
+    <!-- Image and text -->
+    <%- include('partials/navbar'); %>
+    <!-- header-end -->
+
     <div class="container">
         <table class="table table-striped">
             <thead>
@@ -45,6 +51,29 @@
               </tr>
             </tbody>
           </table>
+
+          <div class="card-body d-flex justify-content-center">
+            <form method="POST" action="/finalizarvenda" class="checkout">
+                <div class="checkout-header">
+                    <h1 class="checkout-title">
+                      Checkout
+                    </h1>
+                  </div>
+                  <p>
+                    <input type="text" class="checkout-input checkout-name" placeholder="Nome no Cartão" name="nome_cartao" required>
+                    <input type="text" class="checkout-input checkout-exp" placeholder="MM" minlength="2" maxlength="2" max="12" name="mes_vencimento" required>
+                    <input type="text" class="checkout-input checkout-exp" placeholder="YY" minlength="2" maxlength="2" name="ano_vencimento" required>
+                  </p>
+                  <p>
+                    <input type="text" class="checkout-input checkout-card" placeholder="4111 1111 1111 1111" minlength="16" maxlength="16" name="num_cartao" required>
+                    <input type="text" class="checkout-input checkout-cvc" placeholder="CVC" minlength="3" maxlength="3" name="cvc_cartao" required>
+                  </p>
+                  <input type="text" name="total_venda" value="<%= total_compra %>" hidden>
+                  <p>
+                    <input type="submit" value="Finalizar Compra" class="checkout-btn">
+                  </p>
+            </form>
+        </div>
     </div>
 
 <!-- Button trigger modal -->
@@ -76,8 +105,8 @@
 
 </body>
 
-<script src="/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
+<script src="/js/bootstrap.min.js"></script>
 </html>
